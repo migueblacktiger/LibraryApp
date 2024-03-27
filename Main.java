@@ -1,71 +1,74 @@
-import java.util.Scanner;
-
+import java.io.Console;
 
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
-        Scanner scanner = new Scanner(System.in);
+        Console console = System.console();
+
+        if (console == null) {
+            System.err.println("No se puede acceder a la consola.");
+            System.exit(1);
+        }
 
         while (true) {
-            System.out.println("Library Management System");
-            System.out.println("1. Add a book");
-            System.out.println("2. Borrow a book");
-            System.out.println("3. Return a book");
-            System.out.println("4. Display all books");
-            System.out.println("5. Exit");
+            console.writer().println("Sistema de gestión de biblioteca");
+            console.writer().println("1. Añadir un libro");
+            console.writer().println("2. Prestar un libro");
+            console.writer().println("3. Devolver un libro");
+            console.writer().println("4. Mostrar todos los libros");
+            console.writer().println("5. Salir");
 
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // consume the newline character
+            console.writer().println("Ingrese su elección: ");
+            int choice = Integer.parseInt(console.readLine());
 
             switch (choice) {
                 case 1:
-                    System.out.print("Enter title: ");
-                    String title = scanner.nextLine();
-                    System.out.print("Enter author: ");
-                    String author = scanner.nextLine();
-                    System.out.print("Enter publication year: ");
-                    int publicationYear = scanner.nextInt();
-                    System.out.print("Enter number of pages: ");
-                    int numberOfPages = scanner.nextInt();
-                    scanner.nextLine(); // consume the newline character
-                    Book newBook = new Book(title, author, publicationYear, numberOfPages);
+                    console.writer().println("Ingrese el Id: ");
+                    int Id = Integer.parseInt(console.readLine());
+                    console.writer().println("Ingrese el titulo: ");
+                    String title = console.readLine();
+                    console.writer().println("Ingrese el autor: ");
+                    String author = console.readLine();
+                    console.writer().println("Ingrese año de la publicacion: ");
+                    int publicationYear = Integer.parseInt(console.readLine());
+                    console.writer().println("Ingrese el numero de paginas: ");
+                    int numberOfPages = Integer.parseInt(console.readLine());
+                    Book newBook = new Book(Id, title, author, publicationYear, numberOfPages);
                     library.addBook(newBook);
-                    System.out.println("Book added successfully.");
+                    console.writer().println("El libro se ha añadido exitosamente.");
                     break;
                 case 2:
                     library.displayBooks();
-                    System.out.print("Enter the title of the book to borrow: ");
-                    String borrowTitle = scanner.nextLine();
+                    console.writer().println("Introduce el título del libro a pedir prestado.: ");
+                    String borrowTitle = console.readLine();
                     Book borrowBook = findBook(library, borrowTitle);
                     if (borrowBook != null) {
                         library.borrowBook(borrowBook);
-                        System.out.println("Book borrowed successfully.");
+                        console.writer().println("Libro prestado con éxito.");
                     } else {
-                        System.out.println("Book not found in the library.");
+                        console.writer().println("Libro no encontrado en la biblioteca..");
                     }
                     break;
                 case 3:
                     library.displayBooks();
-                    System.out.print("Enter the title of the book to return: ");
-                    String returnTitle = scanner.nextLine();
+                    console.writer().println("Introduce el título del libro a devolver.: ");
+                    String returnTitle = console.readLine();
                     Book returnBook = findBook(library, returnTitle);
                     if (returnBook != null) {
                         library.returnBook(returnBook);
-                        System.out.println("Book returned successfully.");
+                        console.writer().println("Libro devuelto exitosamente.");
                     } else {
-                        System.out.println("Book not found in the library.");
+                        console.writer().println("Libro no encontrado en la biblioteca..");
                     }
                     break;
                 case 4:
                     library.displayBooks();
                     break;
                 case 5:
-                    System.out.println("Exiting the program.");
-                    scanner.close();
+                    console.writer().println("Saliendo del programa.");
                     System.exit(0);
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    console.writer().println("Elección no válida. Inténtalo de nuevo.");
             }
         }
     }

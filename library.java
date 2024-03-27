@@ -1,4 +1,4 @@
-
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +22,10 @@ class Library {
     }
 
     public void displayBooks() {
-        System.out.println("Books available in the library:");
+        Console console = System.console();
+        console.writer().println("Books available in the library:");
         for (Book book : books) {
-            System.out.println(book);
+            console.writer().println(book);
         }
     }
 }
