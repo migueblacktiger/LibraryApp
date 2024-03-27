@@ -5,12 +5,7 @@ public class Main {
         Library library = new Library();
         Console console = System.console();
 
-        if (console == null) {
-            System.err.println("No se puede acceder a la consola.");
-            System.exit(1);
-        }
-
-        while (true) {
+       while (true) {
             console.writer().println("Sistema de gestión de biblioteca");
             console.writer().println("1. Añadir un libro");
             console.writer().println("2. Prestar un libro");
